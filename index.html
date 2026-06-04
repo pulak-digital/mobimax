@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MobiMax - Buy & Sell Smart Phones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0f0f12;
+            color: #ffffff;
+        }
+
+        /* Header Section */
+        header {
+            background-color: #16161a;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ff1e27;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: #ff1e27;
+        }
+
+        .sell-btn {
+            background-color: #ff1e27;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .sell-btn:hover {
+            background-color: #cc141b;
+        }
+
+        /* Hero Banner */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, #16161a 0%, #0f0f12 100%);
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .hero h1 span {
+            color: #ff1e27;
+        }
+
+        .hero p {
+            color: #a0a0a9;
+            font-size: 14px;
+        }
+
+        /* Product Section */
+        .container {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ff1e27;
+            padding-left: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* Product Card */
+        .card {
+            background-color: #16161a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #27272a;
+            transition: 0.3s;
+            max-width: 340px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #ff1e27;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 240px;
+            background-color: #202024;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 10px;
+        }
+
+        .card-img i {
+            font-size: 80px;
+            color: #3f3f46;
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ff1e27;
+            color: white;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .card-info {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .specs {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+
+        .specs li {
+            font-size: 13px;
+            color: #a0a0a9;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .specs li i {
+            color: #ff1e27;
+            width: 14px;
+        }
+
+        .price-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #00ff66;
+        }
+
+        .original-price {
+            font-size: 14px;
+            color: #71717a;
+            text-decoration: line-through;
+        }
+
+        .whatsapp-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            background-color: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-align: center;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #1ebd54;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #16161a;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #27272a;
+            color: #71717a;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo"><i class="fa-brands fa-apple"></i> Mobi<span>Max</span></div>
+        <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20want%20to%20sell%20my%20old%20phone." class="sell-btn" target="_blank">Sell Phone</a>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <h1>Welcome to <span>MobiMax</span></h1>
+        <p>সেরা দামে প্রি-ওনড এবং নতুন স্মার্টফোন কিনুন ও বিক্রি করুন নিশ্চিত ভরসায়।</p>
+    </section>
+
+    <!-- Products Container -->
+    <div class="container">
+        <h2 class="section-title">Today's Stock</h2>
+        
+        <div class="grid">
+            
+            <!-- iPhone 15 Card -->
+            <div class="card">
+                <div class="card-img">
+                    <!-- যদি ভবিষ্যতে ছবি আপলোড করেন, তবে নিচের আইকন লাইনের বদলে দিতে পারেন: <img src="iphone15.jpg" alt="iPhone 15"> -->
+                    <i class="fa-solid fa-mobile-screen-button"></i>
+                    <div class="badge">Pre-Owned</div>
+                </div>
+                <div class="card-info">
+                    <div class="card-title">iPhone 15</div>
+                    <ul class="specs">
+                        <li><i class="fa-solid fa-palette"></i> Color: Black</li>
+                        <li><i class="fa-solid fa-microchip"></i> Storage: 128 GB</li>
+                        <li><i class="fa-solid fa-battery-three-quarters"></i> Battery Health: 78%</li>
+                        <li><i class="fa-solid fa-circle-check"></i> Condition: Good Condition</li>
+                    </ul>
+                    <div class="price-box">
+                        <div class="price">₹34,000</div>
+                        <div class="original-price">₹79,900</div>
+                    </div>
+                    <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20the%20iPhone%2015%20Black%20(128GB)%20for%2034000." class="whatsapp-btn" target="_blank">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 MobiMax Digital. All Rights Reserved.</p>
+        <p style="font-size: 11px; margin-top: 5px;">Powered by GitHub Pages</p>
+    </footer>
+
+</body>
+</html>
