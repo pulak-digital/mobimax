@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MobiMax - Buy & Sell Smart Phones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0f0f12;
+            color: #ffffff;
+            scroll-behavior: smooth;
+        }
+
+        /* Header Section */
+        header {
+            background-color: #16161a;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #ff1e27;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: #ff1e27;
+        }
+
+        .sell-btn {
+            background-color: #ff1e27;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .sell-btn:hover {
+            background-color: #cc141b;
+        }
+
+        /* Hero Banner */
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, #16161a 0%, #0f0f12 100%);
+        }
+
+        .hero h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .hero h1 span {
+            color: #ff1e27;
+        }
+
+        .hero p {
+            color: #a0a0a9;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* Category Filter Buttons */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .cat-btn {
+            background: #16161a;
+            color: white;
+            border: 1px solid #27272a;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cat-btn:hover, .cat-btn.active {
+            border-color: #ff1e27;
+            background-color: #ff1e27;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 30, 39, 0.3);
+        }
+
+        .cat-btn i.fa-apple { color: #ffffff; }
+        .cat-btn i.fa-android { color: #3ddc84; }
+        .cat-btn.active i.fa-android { color: #ffffff; }
+
+        /* Product Section */
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 400px;
+        }
+
+        .phone-section {
+            display: none;
+        }
+
+        .phone-section.active-section {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 22px;
+            margin: 20px 0 25px 0;
+            border-left: 4px solid #ff1e27;
+            padding-left: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* Product Card */
+        .card {
+            background-color: #16161a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #27272a;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #ff1e27;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 250px;
+            background-color: #1c1c22;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 20px;
+            border-bottom: 1px solid #27272a;
+        }
+
+        .card-img img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.6));
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: #ff1e27;
+            color: white;
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .card-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 19px;
+            margin-bottom: 12px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .specs {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .specs li {
+            font-size: 13.5px;
+            color: #a0a0a9;
+            margin-bottom: 7px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .specs li i {
+            color: #ff1e27;
+            width: 16px;
+            font-size: 12px;
+        }
+
+        .price-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #27272a;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff66;
+        }
+
+        .whatsapp-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            background-color: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-align: center;
+            transition: 0.3s;
+            font-size: 15px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #1ebd54;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #16161a;
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            border-top: 1px solid #27272a;
+            color: #71717a;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo"><i class="fa-brands fa-apple"></i> Mobi<span>Max</span></div>
+        <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20want%20to%20sell%20my%20old%20phone." class="sell-btn" target="_blank">Sell Phone</a>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="hero">
+        <h1>Welcome to <span>MobiMax</span></h1>
+        <p>সেরা দামে প্রি-ওনড এবং নতুন SMARTPHONE কিনুন ও বিক্রি করুন নিশ্চিত ভরসায়।</p>
+        
+        <!-- Category Navigation Filter Buttons -->
+        <div class="category-nav">
+            <button id="btn-iphone" class="cat-btn active" onclick="showCategory('iphone')"><i class="fa-brands fa-apple"></i> iPhone Collection</button>
+            <button id="btn-android" class="cat-btn" onclick="showCategory('android')"><i class="fa-brands fa-android"></i> Android Collection</button>
+        </div>
+    </section>
+
+    <!-- Main Products Container -->
+    <div class="container">
+        
+        <!-- ================= iPHONE SECTION ================= -->
+        <div id="iphone-section" class="phone-section active-section">
+            <h2 class="section-title"><i class="fa-brands fa-apple"></i> iPhone Series</h2>
+            <div class="grid">
+                
+                <!-- iPhone 13 -->
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1639491950497-6cb19aea26bc?w=500&q=80" alt="iPhone 13">
+                        <div class="badge">Pre-Owned</div>
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">iPhone 13</div>
+                            <ul class="specs">
+                                <li><i class="fa-solid fa-microchip"></i> Storage: 128 GB</li>
+                                <li><i class="fa-solid fa-battery-three-quarters"></i> Battery Health: 87%</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Condition: Superb Condition</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price-box"><div class="price">₹38,500</div></div>
+                            <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20iPhone%2013%20(128GB)%20with%2087%25%20Battery." class="whatsapp-btn" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- iPhone 14 -->
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1663499482523-1c0c1ebe4cc2?w=500&q=80" alt="iPhone 14">
+                        <div class="badge">Pre-Owned</div>
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">iPhone 14</div>
+                            <ul class="specs">
+                                <li><i class="fa-solid fa-microchip"></i> Storage: 128 GB</li>
+                                <li><i class="fa-solid fa-battery-three-quarters"></i> Battery Health: 85%</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Condition: Mint Condition</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price-box"><div class="price">₹45,000</div></div>
+                            <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20iPhone%2014%20(128GB)%20with%2085%25%20Battery." class="whatsapp-btn" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- iPhone 15 -->
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&q=80" alt="iPhone 15">
+                        <div class="badge">Pre-Owned</div>
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">iPhone 15</div>
+                            <ul class="specs">
+                                <li><i class="fa-solid fa-microchip"></i> Storage: 128 GB</li>
+                                <li><i class="fa-solid fa-battery-three-quarters"></i> Battery Health: 87%</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Condition: Like New</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price-box"><div class="price">₹54,000</div></div>
+                            <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20iPhone%2015%20(128GB)%20with%2087%25%20Battery." class="whatsapp-btn" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- iPhone 16 -->
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1727375080061-300bc87cb23b?w=500&q=80" alt="iPhone 16">
+                        <div class="badge">Pre-Owned</div>
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">iPhone 16</div>
+                            <ul class="specs">
+                                <li><i class="fa-solid fa-microchip"></i> Storage: 128 GB</li>
+                                <li><i class="fa-solid fa-battery-three-quarters"></i> Battery Health: 89%</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Condition: Scratchless</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price-box"><div class="price">₹66,500</div></div>
+                            <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20iPhone%2016%20(128GB)%20with%2089%25%20Battery." class="whatsapp-btn" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- iPhone 17 -->
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500&q=80" alt="iPhone 17">
+                        <div class="badge">Top Premium</div>
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">iPhone 17</div>
+                            <ul class="specs">
+                                <li><i class="fa-solid fa-microchip"></i> Storage: 256 GB</li>
+                                <li><i class="fa-solid fa-battery-three-quarters"></i> Battery Health: 100%</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Condition: Brand New Status</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price-box"><div class="price">₹84,900</div></div>
+                            <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20iPhone%2017%20(256GB)%20with%20100%25%20Battery." class="whatsapp-btn" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- iPhone 12 Pro -->
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=500&q=80" alt="iPhone 12 Pro">
+                        <div class="badge">Pre-Owned</div>
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">iPhone 12 Pro</div>
+                            <ul class="specs">
+                                <li><i class="fa-solid fa-microchip"></i> Storage: 128 GB</li>
+                                <li><i class="fa-solid fa-battery-three-quarters"></i> Battery Health: 82%</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Condition: Good Condition</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price-box"><div class="price">₹32,000</div></div>
+                            <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20iPhone%2012%20Pro%20(128GB)%20with%2082%25%20Battery." class="whatsapp-btn" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= ANDROID SECTION ================= -->
+        <div id="android-section" class="phone-section">
+            <h2 class="section-title"><i class="fa-brands fa-android"></i> Android Series</h2>
+            <div class="grid">
+                
+                <!-- Vivo V50 5G -->
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&q=80" alt="Vivo V50 5G">
+                        <div class="badge">Open Box</div>
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">Vivo V50 5G</div>
+                            <ul class="specs">
+                                <li><i class="fa-solid fa-microchip"></i> Storage: 128 GB</li>
+                                <li><i class="fa-solid fa-box-open"></i> Status: Open Box Deal</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Condition: Neat & Clean</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price-box"><div class="price">₹21,500</div></div>
+                            <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20Vivo%20V50%205G%20(128GB)%20Open%20Box." class="whatsapp-btn" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vivo V60 5G -->
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&q=80" alt="Vivo V60 5G">
+                        <div class="badge">Like New</div>
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">Vivo V60 5G</div>
+                            <ul class="specs">
+                                <li><i class="fa-solid fa-microchip"></i> Storage: 256 GB</li>
+                                <li><i class="fa-solid fa-calendar-days"></i> Age: 19 Days Old Only</li>
+                                <li><i class="fa-solid fa-shield-halved"></i> Warranty: Official Running</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price-box"><div class="price">₹26,999</div></div>
+                            <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20Vivo%20V60%205G%20(256GB)%2019%20Days%20Old." class="whatsapp-btn" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- iQOO Z11x 5G -->
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1565630916779-e303be97b6f5?w=500&q=80" alt="iQOO Z11x">
+                        <div class="badge">Pre-Owned</div>
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">iQOO Z11x 5G</div>
+                            <ul class="specs">
+                                <li><i class="fa-solid fa-microchip"></i> Storage: 128 GB</li>
+                                <li><i class="fa-solid fa-calendar-days"></i> Age: 2 Months Old</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Condition: Top Class Performance</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price-box"><div class="price">₹14,200</div></div>
+                            <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20iQOO%20Z11x%205G%20(128GB)%202%20Months%20Old." class="whatsapp-btn" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Realme P4 5G -->
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80" alt="Realme P4">
+                        <div class="badge">Pre-Owned</div>
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">Realme P4 5G</div>
+                            <ul class="specs">
+                                <li><i class="fa-solid fa-microchip"></i> Storage: 128 GB</li>
+                                <li><i class="fa-solid fa-calendar-days"></i> Age: 4 Months Old</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Condition: Fresh Look</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price-box"><div class="price">₹12,800</div></div>
+                            <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20Realme%20P4%205G%20(128GB)%204%20Months%20Old." class="whatsapp-btn" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vivo T4R 5G -->
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://images.unsplash.com/photo-1573148195900-7845dcb9b127?w=500&q=80" alt="Vivo T4R">
+                        <div class="badge">Budget Deal</div>
+                    </div>
+                    <div class="card-info">
+                        <div>
+                            <div class="card-title">Vivo T4R 5G</div>
+                            <ul class="specs">
+                                <li><i class="fa-solid fa-microchip"></i> Storage: 128 GB</li>
+                                <li><i class="fa-solid fa-shield-xmark"></i> Warranty: Out Of Warranty</li>
+                                <li><i class="fa-solid fa-circle-check"></i> Condition: Perfectly Working</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="price-box"><div class="price">₹10,500</div></div>
+                            <a href="https://wa.me/917432872430?text=Hello%20MobiMax,%20I%20am%20interested%20in%20buying%20Vivo%20T4R%205G%20(128GB)%20Out%20of%20Warranty." class="whatsapp-btn" target="_blank">
+                                <i class="fa-brands fa-whatsapp"></i> WhatsApp Order
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 MobiMax Digital. All Rights Reserved.</p>
+        <p style="font-size: 11px; margin-top: 5px;">Powered by GitHub Pages</p>
+    </footer>
+
+    <!-- Tab Filter Logic Script -->
+    <script>
+        function showCategory(category) {
+            // বোতামগুলোর অ্যাক্টিভ স্টেট চেঞ্জ করার জন্য
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // সেকশনগুলো লুকিয়ে রাখার জন্য
+            const sections = document.querySelectorAll('.phone-section');
+            sections.forEach(sec => sec.classList.remove('active-section'));
+
+            // যেটা ক্লিক হয়েছে সেটা দেখানোর জন্য
+            if(category === 'iphone') {
+                document.getElementById('iphone-section').classList.add('active-section');
+                document.getElementById('btn-iphone').classList.add('active');
+            } else if(category === 'android') {
+                document.getElementById('android-section').classList.add('active-section');
+                document.getElementById('btn-android').classList.add('active');
+            }
+        }
+    </script>
+
+</body>
+</html>
